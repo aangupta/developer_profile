@@ -9,10 +9,10 @@ const { devRepos } = require('./developers_data');
 
 router.get('/', (req, res) => {
     const usersData = [];
-    devRepos.forEach((element) => {
+    Object.keys(devRepos).forEach((id) => {
         const user = {
-            id: element.github_id,
-            avatar_url: element.avatarUrl,
+            id:id,
+            avatar_url: devRepos[id].avatarUrl,
         };
         usersData.push(user);
     });
@@ -20,28 +20,33 @@ router.get('/', (req, res) => {
 });
 
 /* POST /api/developers */
-
+						
+						
 router.post('/', (req, res) => {
-    const userInfo = {};
+
+    if(!req.body.github_id) {
+        res.status(400).json({ error: 'Github_id is required' });
+    }
     const uid = req.body.github_id;
-    userInfo.github_id = req.body.github_id;
-    userInfo.linkedin_id = req.body.linkedin_id;
-    userInfo.codechef_id = req.body.codechef_id;
-    userInfo.hackerrank_id = req.body.hackerrank_id;
-    userInfo.twitter_id = req.body.twitter_id;
-    userInfo.medium_id = req.body.medium_id;
+    const github_id = req.body.github_id;
+    const linkedin_id = req.body.linkedin_id;
+    const codechef_id = req.body.codechef_id;
+    const hackerrank_id = req.body.hackerrank_id;
+    const twitter_id = req.body.twitter_id;
+    const medium_id = req.body.medium_id;
 
     fetch(`https://api.github.com/users/${uid}`)
         .then((response) => response.json())
         .then((json) => {
-            userInfo.id = json.login;
-            userInfo.avatarUrl = json.avatar_url;
-            userInfo.name = json.name;
-            userInfo.company = json.company;
-            userInfo.blog = json.blog;
-            userInfo.location = json.location;
-            userInfo.email = json.email;
-            userInfo.bio = json.bio;
+            const id = json.login;
+            const avatarUrl = json.avatar_url;
+            const name = json.name;
+            const company = json.company;
+            const blog = json.blog;
+            const location = json.location;
+            const email = json.email;
+            const bio = json.bio;
+            const url = json.repos_url;
             /* console.log(uid);
             const getDeveloperRepos = axios.get(`https://api.github.com/users/${uid}/repos`);
             console.log(getDeveloperRepos.data);
@@ -66,13 +71,13 @@ router.post('/', (req, res) => {
                             updated_at: element.updated_at,
                         };
                     });
-                    userInfo.repos = repos;
+                    devRepos[uid] = {repos};
                 
                 }); 
               
             if (req.body.github_id === json.login) {
-                devRepos.push(userInfo);
-                /* console.log(userInfo); */
+                devRepos[uid] = {id,avatarUrl,name,company, blog,location,email,bio};
+                console.log(devRepos[uid]);
                 res.status(201).send({ id: req.body.github_id });
             } else {
                 res.status(400).send('GitHub username is invalid');
@@ -83,11 +88,11 @@ router.post('/', (req, res) => {
 /* GET /api/developers/:id */
 
 router.get('/:id', (req, res) => {
-    devRepos.forEach((element) => {
+    Object.keys(devRepos).forEach((element) => {
         /* console.log(`github id ${element.github_id}    request param ${req.params.id}`); */
         if (element.github_id === req.params.id) {
             /* console.log('Hi there'); */
-            res.status(200).send(element);
+            res.status(200).send((element));
         }
     });
 

@@ -5,8 +5,7 @@ import { ReactComponent as Arrow } from '../images/arrow.svg'
 import { Link } from 'react-router-dom'
 
 
-const UsersList = ( {developersList, getDevelopersData}) => {
-    getDevelopersData();
+const UsersList = ( { developersList }) => {
 
     const developersData = (developersList.map(dev => (
         <div className = 'flex items-center justify-start mt-5 lg:mt-25' key ={dev.id}>

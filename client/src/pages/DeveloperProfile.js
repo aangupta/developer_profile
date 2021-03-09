@@ -2,7 +2,7 @@ import React, {useState, useEffect}from 'react';
 import { useParams }  from 'react-router-dom';
 import axios from 'axios';
 import cx from 'classnames';
-import Fragment from 'react';
+import {Fragment} from 'react';
 import dayjs from 'dayjs';
 
 import CodechefIcon from '../images/codechef.png';
@@ -23,27 +23,34 @@ import Footer from '../components/Footer'
 import NavBar from '../components/NavBar'
 import ProfileIcon from '../components/Icon'
 
+
+
 const DeveloperProfile = () => {
     const [developerProfileInfo, setDeveloperProfileInfo] = useState(null);
-    const [load, setLoad] = useState(false);
+    const [load, setLoad] = useState(true);
     const  { developerId }  = useParams();
-    console.log(developerId)
+    console.log(developerId);
 
     useEffect (() => {
         try{
 
-            const getDeveloperInfo = async () => {
+            const getDeveloperProfile = async () => {
                 const res = await axios.get(`http://localhost:4000/api/developers/${developerId}`);
+                console.log();
                 setDeveloperProfileInfo(res.data);
+               
                 setLoad(false);
             }
-            getDeveloperInfo();
+            getDeveloperProfile();
+            
         } catch(error) {
             console.log(error);
             setLoad(false);
 
         }
     }, [developerId]);
+
+
 
     return(
        <div className = 'font-body'>
@@ -52,7 +59,7 @@ const DeveloperProfile = () => {
                <>
                     <div className='h-full lg:h-100 bg-sub'>
                         <div className = 'flex flex-col justify-center items-center px-7 py-10 lg:flex-row lg:justify-start lg:py-20 lg:px-8'>
-                            {developerProfileInfo.avatarUrl ? <img src={developerProfileInfo.avatarUrl} alt='developer_image' className='mr-5 rounded-full fill-current w-25 h-25 lg:w-83 lg:h-83 text-secondary' /> : <UserIcon className='fill-current w-25 h-25 lg:w-83 lg:h-83 text-secondary' />}
+                            {developerProfileInfo.avatar_url ? <img src={developerProfileInfo.avatar_url} alt='developer_image' className='mr-5 rounded-full fill-current w-25 h-25 lg:w-83 lg:h-83 text-secondary' /> : <UserIcon className='fill-current w-25 h-25 lg:w-83 lg:h-83 text-secondary' />}
                             <div className='flex flex-col mt-2.5 lg:mt-12 text-center lg:text-left'>
                             <div className ='text-xl lg:text-5xl text-header'>
                                 {developerProfileInfo.name}
@@ -141,11 +148,10 @@ const DeveloperProfile = () => {
 
                         <div className='border border-b-1 text-tertiary' />
 
-
-                       <>
+                        <>
                             {developerProfileInfo.repos.length > 0 && (
                                 developerProfileInfo.repos.map(repo => (
-                                    <Fragment key = {repo.name}>
+                                    <Fragment key={repo.name}>
                                         <div className='py-2.5 px-4 lg:py-7.5 lg:px-24.5 flex flex-col'>
                                             <a rel='noreferrer' target='_blank' href={repo.html_url} className='flex items-center justify-start text-xl lg:text-4xl text-linkColor'>
                                                 {repo.name}
@@ -160,7 +166,7 @@ const DeveloperProfile = () => {
                                     </Fragment>
                                 ))
                             )}
-                        </> 
+                        </>
 
                         
 

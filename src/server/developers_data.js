@@ -1,4 +1,4 @@
-const devRepos = [];
+const devRepos = {}
 
 module.exports = {
     devRepos,
