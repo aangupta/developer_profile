@@ -35,7 +35,7 @@ const DeveloperProfile = () => {
         try{
 
             const getDeveloperProfile = async () => {
-                const res = await axios.get(`http://localhost:4000/api/developers/${developerId}`);
+                const res = await axios.get(`/api/developers/${developerId}`);
                 console.log();
                 setDeveloperProfileInfo(res.data);
                

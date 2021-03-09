@@ -16,13 +16,13 @@ const Content = ( {children, onAddDeveloper}) => {
 
    useEffect( () => {
        if(!searchDevProfile){
-           getDevelopers('http://localhost:4000/api/developers/');
+           getDevelopers('/api/developers/');
        }
 
    },[onAddDeveloper, searchDevProfile])
 
    const onSearchDeveloperProfile = async () =>{
-       const res = getDevelopers(` http://localhost:4000/api/developers/search/${searchDevProfile}`);
+       const res = getDevelopers(`/api/developers/search/${searchDevProfile}`);
        setSearchDevProfile(res.data);
        console.log(searchDevProfile);
    }
