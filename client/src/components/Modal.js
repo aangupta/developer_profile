@@ -33,7 +33,7 @@ const Modal = ({modalClose}) => {
                medium_id: medium
            }
             try{
-                await axios.post('http://localhost:4000/api/developers/', inputValue, {headers:header});
+                await axios.post('/api/developers/', inputValue, {headers:header});
                 setError('');
             } catch (error) {
                 console.log(error.response);
