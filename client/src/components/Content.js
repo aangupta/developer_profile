@@ -42,7 +42,7 @@ const Content = ( {children, onAddDeveloper}) => {
              <UsersList developersList = {developersData}/>
              <hr className='text-tertiary mb-7.5 lg:mb-13' />
              <div className='flex items-center justify-center text-sm lg:text-4xl mb-2.5 lg:mb-13 text-header'>
-                    {developersData?.length === 0 ? `No developers added yet` : `Could not find what you were looking for?`}
+                    {developersData.length === 0 ? `No developers added yet` : `Could not find what you were looking for?`}
              </div>
 
              <div className = 'flex items-center justify-center'>
