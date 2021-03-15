@@ -107,7 +107,7 @@ exports.searchDeveloperProfile = async (req,res) => {
         const developersData = JSON.parse(await fs.readFile(dataPath,'utf-8'));
         const developerProfile = developersData.find((x) => x.id === id);
         if(!developerProfile)
-            return res.status(400).json([]);
+            return res.status(200).json([]);
         
         const developer = [
             {
